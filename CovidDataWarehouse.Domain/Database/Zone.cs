@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CovidDataWarehouse.Domain
+namespace CovidDataWarehouse.Domain.Database
 {
     [Table("zone")]
     public class Zone

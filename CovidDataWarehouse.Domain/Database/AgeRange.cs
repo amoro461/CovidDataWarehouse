@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CovidDataWarehouse.Domain
+namespace CovidDataWarehouse.Domain.Database
 {
     [Table("age_range")]
     public class AgeRange

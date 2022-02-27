@@ -16,6 +16,8 @@ namespace CovidDataWarehouse
     {
         private string DEFAULT_DATABASE_CONNECTION_STRING_NAME = "Server=tcp:covid-server-comp4522.database.windows.net,1433;Initial Catalog=covid-database;Persist Security Info=False;User ID=SuperCoolManager;Password=VeryMuchASecretPassword!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
+        private string DEFAULT_DATA_WAREHOUSE_CONNECTION_STRING_NAME = "Server=tcp:covid-server-comp4522.database.windows.net,1433;Initial Catalog=covid-data-warehouse;Persist Security Info=False;User ID=SuperCoolManager;Password=VeryMuchASecretPassword!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,7 +30,8 @@ namespace CovidDataWarehouse
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<CovidDataWarehouseContext>(options => options.UseSqlServer(DEFAULT_DATABASE_CONNECTION_STRING_NAME));
+            services.AddDbContext<CovidDatabaseContext>(options => options.UseSqlServer(DEFAULT_DATABASE_CONNECTION_STRING_NAME));
+            services.AddDbContext<CovidDataWarehouseContext>(options => options.UseSqlServer(DEFAULT_DATA_WAREHOUSE_CONNECTION_STRING_NAME));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

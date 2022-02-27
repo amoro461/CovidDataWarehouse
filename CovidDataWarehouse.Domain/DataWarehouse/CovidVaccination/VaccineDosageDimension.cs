@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CovidDataWarehouse.Domain
+namespace CovidDataWarehouse.Domain.DataWarehouse
 {
     [Table("")]
     public class VaccineDosageDimension

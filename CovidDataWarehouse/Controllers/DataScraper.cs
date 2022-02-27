@@ -1,5 +1,6 @@
 ﻿using CovidDataWarehouse.Data;
-using CovidDataWarehouse.Domain;
+using CovidDataWarehouse.Domain.Database;
+using CovidDataWarehouse.Domain.DataWarehouse;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,17 @@ namespace CovidDataWarehouse.App.Controllers
 {
     public class DataScraper : Controller
     {
-        private static CovidDataWarehouseContext _context;
+        private static CovidDatabaseContext _databaseContext;
+        private static CovidDataWarehouseContext _dataWarehouseContext;
+        private readonly CovidCaseDatabaseRepository _covidCaseDatabaseRepository;
+        private readonly PopulationVaccinationDatabaseRepository _populationVaccinationDatabaseRepository;
 
-        public DataScraper(CovidDataWarehouseContext context)
+        public DataScraper(CovidDatabaseContext databaseContext, CovidDataWarehouseContext dataWarehouseContext)
         {
-            _context = context;
+            _databaseContext = databaseContext;
+            _dataWarehouseContext = dataWarehouseContext;
+            _covidCaseDatabaseRepository = new CovidCaseDatabaseRepository(databaseContext);
+            _populationVaccinationDatabaseRepository = new PopulationVaccinationDatabaseRepository(databaseContext);
         }
 
         public IActionResult Index()
@@ -57,9 +64,9 @@ namespace CovidDataWarehouse.App.Controllers
                         }
                     }
 
-                    List<CaseStatus> caseStatuses = _context.CaseStatuses.ToList();
-                    List<Zone> zones = _context.Zones.ToList();
-                    List<AgeRange> ageRanges = _context.AgeRanges.ToList();
+                    List<CaseStatus> caseStatuses = _databaseContext.CaseStatuses.ToList();
+                    List<Zone> zones = _databaseContext.Zones.ToList();
+                    List<AgeRange> ageRanges = _databaseContext.AgeRanges.ToList();
                     CaseStatus caseStatus;
                     Zone zone;
                     AgeRange ageRange;
@@ -69,34 +76,34 @@ namespace CovidDataWarehouse.App.Controllers
                         if (zones.FirstOrDefault(i => i.ZoneName.Equals(caseData.AlbertaHealthServicesZone)) == null)
                         {
                             zone = new Zone { ZoneName = caseData.AlbertaHealthServicesZone };
-                            _context.Zones.Add(zone);
+                            _databaseContext.Zones.Add(zone);
                             zones.Add(zone);
                         }
 
                         if (caseStatuses.FirstOrDefault(i => i.CaseStatusName.Equals(caseData.CaseStatus)) == null)
                         {
                             caseStatus = new CaseStatus { CaseStatusName = caseData.CaseStatus };
-                            _context.CaseStatuses.Add(caseStatus);
+                            _databaseContext.CaseStatuses.Add(caseStatus);
                             caseStatuses.Add(caseStatus);
                         }
 
                         if (ageRanges.FirstOrDefault(i => i.AgeRangeName.Equals(caseData.AgeGroup)) == null)
                         {
                             ageRange = new AgeRange { AgeRangeName = caseData.AgeGroup };
-                            _context.AgeRanges.Add(ageRange);
+                            _databaseContext.AgeRanges.Add(ageRange);
                             ageRanges.Add(ageRange);
                         }
                     }
 
-                    await _context.SaveChangesAsync();
+                    await _databaseContext.SaveChangesAsync();
 
-                    caseStatuses = _context.CaseStatuses.ToList();
-                    zones = _context.Zones.ToList();
-                    ageRanges = _context.AgeRanges.ToList();
+                    caseStatuses = _databaseContext.CaseStatuses.ToList();
+                    zones = _databaseContext.Zones.ToList();
+                    ageRanges = _databaseContext.AgeRanges.ToList();
 
                     foreach (AlbertaCaseData caseData in albertaCasesData.Take(1000))
                     {
-                        _context.CovidCases.Add(new CovidCase()
+                        _databaseContext.CovidCases.Add(new CovidCase()
                         {
                             ZoneId = zones.FirstOrDefault(i => i.ZoneName.Equals(caseData.AlbertaHealthServicesZone)).ZoneId,
                             AgeRangeId = ageRanges.FirstOrDefault(i => i.AgeRangeName.Equals(caseData.AgeGroup)).AgeRangeId,
@@ -107,7 +114,7 @@ namespace CovidDataWarehouse.App.Controllers
                         });
                     }
 
-                    await _context.SaveChangesAsync();
+                    await _databaseContext.SaveChangesAsync();
 
                     return document;
                 }
@@ -150,8 +157,8 @@ namespace CovidDataWarehouse.App.Controllers
                         }
                     }
 
-                    List<Zone> zones = _context.Zones.ToList();
-                    List<AgeRange> ageRanges = _context.AgeRanges.ToList();
+                    List<Zone> zones = _databaseContext.Zones.ToList();
+                    List<AgeRange> ageRanges = _databaseContext.AgeRanges.ToList();
                     Zone zone;
                     AgeRange ageRange;
 
@@ -160,26 +167,26 @@ namespace CovidDataWarehouse.App.Controllers
                         if (zones.FirstOrDefault(i => i.ZoneName.Equals(vaccineData.ZoneName)) == null)
                         {
                             zone = new Zone { ZoneName = vaccineData.ZoneName };
-                            _context.Zones.Add(zone);
+                            _databaseContext.Zones.Add(zone);
                             zones.Add(zone);
                         }
 
                         if (ageRanges.FirstOrDefault(i => i.AgeRangeName.Equals(vaccineData.AgeGroup)) == null)
                         {
                             ageRange = new AgeRange { AgeRangeName = vaccineData.AgeGroup };
-                            _context.AgeRanges.Add(ageRange);
+                            _databaseContext.AgeRanges.Add(ageRange);
                             ageRanges.Add(ageRange);
                         }
                     }
 
-                    await _context.SaveChangesAsync();
+                    await _databaseContext.SaveChangesAsync();
 
-                    zones = _context.Zones.ToList();
-                    ageRanges = _context.AgeRanges.ToList();
+                    zones = _databaseContext.Zones.ToList();
+                    ageRanges = _databaseContext.AgeRanges.ToList();
 
                     foreach (AlbertaVaccineData vaccineData in albertaVaccinesData)
                     {
-                        _context.PopulationVaccinations.Add(new PopulationVaccination()
+                        _databaseContext.PopulationVaccinations.Add(new PopulationVaccination()
                         {
                             ZoneId = zones.FirstOrDefault(i => i.ZoneName.Equals(vaccineData.ZoneName)).ZoneId,
                             AgeRangeId = ageRanges.FirstOrDefault(i => i.AgeRangeName.Equals(vaccineData.AgeGroup)).AgeRangeId,
@@ -190,7 +197,7 @@ namespace CovidDataWarehouse.App.Controllers
                         });
                     }
 
-                    await _context.SaveChangesAsync();
+                    await _databaseContext.SaveChangesAsync();
 
                     return document;
                 }
@@ -203,13 +210,30 @@ namespace CovidDataWarehouse.App.Controllers
 
         public async Task<IActionResult> DeleteDatabaseData()
         {
-            _context.AgeRanges.RemoveRange(_context.AgeRanges.ToList());
-            _context.CaseStatuses.RemoveRange(_context.CaseStatuses.ToList());
-            _context.Zones.RemoveRange(_context.Zones.ToList());
-            _context.CovidCases.RemoveRange(_context.CovidCases.ToList());
-            _context.PopulationVaccinations.RemoveRange(_context.PopulationVaccinations.ToList());
+            _databaseContext.AgeRanges.RemoveRange(_databaseContext.AgeRanges.ToList());
+            _databaseContext.CaseStatuses.RemoveRange(_databaseContext.CaseStatuses.ToList());
+            _databaseContext.Zones.RemoveRange(_databaseContext.Zones.ToList());
+            _databaseContext.CovidCases.RemoveRange(_databaseContext.CovidCases.ToList());
+            _databaseContext.PopulationVaccinations.RemoveRange(_databaseContext.PopulationVaccinations.ToList());
 
-            await _context.SaveChangesAsync();
+            await _databaseContext.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        public async Task<IActionResult> ConvertData()
+        {
+            _dataWarehouseContext.CovidCaseFacts.FirstOrDefault();
+
+            foreach (CovidCase covidCase in _covidCaseDatabaseRepository.GetCovidCases())
+            {
+                
+            }
+
+            foreach (PopulationVaccination populationVaccination in _populationVaccinationDatabaseRepository.GetPopulationVaccinations())
+            {
+
+            }
 
             return Ok();
         }

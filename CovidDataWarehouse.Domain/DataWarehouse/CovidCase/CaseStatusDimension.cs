@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CovidDataWarehouse.Domain
+namespace CovidDataWarehouse.Domain.DataWarehouse
 {
     [Table("")]
-    class CaseStatusDimension
+    public class CaseStatusDimension
     {
         [Key]
         public int CaseStatusId { get; set; }

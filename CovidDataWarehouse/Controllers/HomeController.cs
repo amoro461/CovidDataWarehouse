@@ -12,10 +12,10 @@ namespace CovidDataWarehouse.Controllers
 {
     public class HomeController : Controller
     {
-        private static CovidDataWarehouseContext _context;
+        private static CovidDatabaseContext _context;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, CovidDataWarehouseContext context)
+        public HomeController(ILogger<HomeController> logger, CovidDatabaseContext context)
         {
             _context = context;
             _logger = logger;
