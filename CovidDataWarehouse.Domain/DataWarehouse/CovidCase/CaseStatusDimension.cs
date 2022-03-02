@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 
 namespace CovidDataWarehouse.Domain.DataWarehouse
 {
-    [Table("")]
+    [Table("Case_Status_Dimension")]
     public class CaseStatusDimension
     {
         [Key]
+        [Column("Case_Status_Id")]
         public int CaseStatusId { get; set; }
 
+        [Column("Status_Name")]
         public string StatusName { get; set; }
     }
 }

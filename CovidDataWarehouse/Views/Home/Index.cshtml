@@ -1,4 +1,167 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<body>
+    <h1>Covid Data Warehouse Console</h1>
+    <div>
+        <button onclick="clearDatabase()">Clear Database</button>
+        <span>Is Succeed: </span><span id="clearDatabaseIsSucceedElement">Null</span>
+    </div>
+    <br />
+    <div>
+        <button onclick="clearDataWarehouse()">Clear Data Warehouse</button>
+        <span>Is Succeed: </span><span id="clearDataWarehouseIsSucceedElement">Null</span>
+    </div>
+    <br />
+    <div>
+        <button onclick="loadCovidCaseData()">Load AHS Covid Cases Data</button>
+        <span>Is Succeed: </span><span id="loadCovidCaseDataIsSucceedElement">Null</span>
+    </div>
+    <br />
+    <div>
+        <button onclick="loadCovidVaccineData()">Load AHS Covid Vaccine Data</button>
+        <span>Is Succeed: </span><span id="loadCovidVaccineDataIsSucceedElement">Null</span>
+    </div>
+    <br />
+    <div>
+        <button onclick="convertCovidCaseData()">Convert Covid Case Data Into Data Warehouse</button>
+        <span>Is Succeed: </span><span id="convertCovidCaseDataIsSucceedElement">Null</span>
+    </div>
+    <br />
+    <div>
+        <button onclick="convertCovidVaccineData()">Convert Covid Vaccine Data Into Data Warehouse</button>
+        <span>Is Succeed: </span><span id="convertCovidVaccineDataIsSucceedElement">Null</span>
+    </div>
+</body>
 
+<script>
+    let clearDatabaseIsSucceedElement = document.querySelector("#clearDatabaseIsSucceedElement");
+    let clearDataWarehouseIsSucceedElement = document.querySelector("#clearDataWarehouseIsSucceedElement");
+    let loadCovidCaseDataIsSucceedElement = document.querySelector("#loadCovidCaseDataIsSucceedElement");
+    let loadCovidVaccineDataIsSucceedElement = document.querySelector("#loadCovidVaccineDataIsSucceedElement");
+    let convertCovidCaseDataIsSucceedElement = document.querySelector("#convertCovidCaseDataIsSucceedElement");
+    let convertCovidVaccineDataIsSucceedElement = document.querySelector("#convertCovidVaccineDataIsSucceedElement");
+
+    function clearDatabase() {
+        clearDatabaseIsSucceedElement.innerHTML = "Processing...";
+
+        fetch("/datascraperservices/DeleteDatabaseData")
+            .then(response => response.json())
+            .then(data => {
+                if (data.IsSucceed == true) {
+                    clearDatabaseIsSucceedElement.innerHTML = "True";
+                }
+                else {
+                    clearDatabaseIsSucceedElement.innerHTML = "False";
+                }
+
+
+                setTimeout(function () {
+                    clearDatabaseIsSucceedElement.innerHTML = "Null";
+                }, 100000);
+            })
+            .catch(exception => { });
+    }
+
+    function clearDataWarehouse() {
+        clearDataWarehouseIsSucceedElement.innerHTML = "Processing...";
+
+        fetch("/datascraperservices/DeleteDataWarehouseData")
+            .then(response => response.json())
+            .then(data => {
+                if (data.IsSucceed == true) {
+                    clearDataWarehouseIsSucceedElement.innerHTML = "True";
+                }
+                else {
+                    clearDataWarehouseIsSucceedElement.innerHTML = "False";
+                }
+
+
+                setTimeout(function () {
+                    clearDataWarehouseIsSucceedElement.innerHTML = "Null";
+                }, 100000);
+            })
+            .catch(exception => { });
+    }
+
+    function loadCovidCaseData() {
+        loadCovidCaseDataIsSucceedElement.innerHTML = "Processing...";
+
+        fetch("/datascraperservices/GetAlbertaCovidData")
+            .then(response => response.json())
+            .then(data => {
+                if (data.IsSucceed == true) {
+                    loadCovidCaseDataIsSucceedElement.innerHTML = "True";
+                }
+                else {
+                    loadCovidCaseDataIsSucceedElement.innerHTML = "False";
+                }
+
+
+                setTimeout(function () {
+                    loadCovidCaseDataIsSucceedElement.innerHTML = "Null";
+                }, 100000);
+            })
+            .catch(exception => { });
+    }
+
+    function loadCovidVaccineData() {
+        loadCovidVaccineDataIsSucceedElement.innerHTML = "Processing...";
+
+        fetch("/datascraperservices/GetAlbertaVaccineData")
+            .then(response => response.json())
+            .then(data => {
+                if (data.IsSucceed == true) {
+                    loadCovidVaccineDataIsSucceedElement.innerHTML = "True";
+                }
+                else {
+                    loadCovidVaccineDataIsSucceedElement.innerHTML = "False";
+                }
+
+
+                setTimeout(function () {
+                    loadCovidVaccineDataIsSucceedElement.innerHTML = "Null";
+                }, 100000);
+            })
+            .catch(exception => { });
+    }
+
+    function convertCovidCaseData() {
+        convertCovidCaseDataIsSucceedElement.innerHTML = "Processing...";
+
+        fetch("/datascraperservices/ConvertDataCases")
+            .then(response => response.json())
+            .then(data => {
+                if (data.IsSucceed == true) {
+                    convertCovidCaseDataIsSucceedElement.innerHTML = "True";
+                }
+                else {
+                    convertCovidCaseDataIsSucceedElement.innerHTML = "False";
+                }
+
+
+                setTimeout(function () {
+                    convertCovidCaseDataIsSucceedElement.innerHTML = "Null";
+                }, 100000);
+            })
+            .catch(exception => { });
+    }
+
+    function convertCovidVaccineData() {
+        convertCovidVaccineDataIsSucceedElement.innerHTML = "Processing...";
+
+        fetch("/datascraperservices/ConvertDataVaccines")
+            .then(response => response.json())
+            .then(data => {
+                if (data.IsSucceed == true) {
+                    convertCovidVaccineDataIsSucceedElement.innerHTML = "True";
+                }
+                else {
+                    convertCovidVaccineDataIsSucceedElement.innerHTML = "False";
+                }
+
+
+                setTimeout(function () {
+                    convertCovidVaccineDataIsSucceedElement.innerHTML = "Null";
+                }, 100000);
+            })
+            .catch(exception => { });
+    }
+</script>

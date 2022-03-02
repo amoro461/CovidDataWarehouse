@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 
 namespace CovidDataWarehouse.Domain.DataWarehouse
 {
-    [Table("")]
+    [Table("Vaccine_Age_Range_Dimension")]
     public class VaccineAgeRangeDimension
     {
         [Key]
-        public int AgeRangeId { get; set; }
+        [Column("Vaccine_Age_Range_Id")]
+        public int VaccineAgeRangeId { get; set; }
 
+        [Column("Age_Range_Name")]
         public string AgeRangeName { get; set; }
     }
 }

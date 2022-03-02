@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CovidDataWarehouse.App", "CovidDataWarehouse\CovidDataWarehouse.App.csproj", "{B6869295-EA12-4405-95D5-9612C09CAD9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidDataWarehouse.App", "CovidDataWarehouse\CovidDataWarehouse.App.csproj", "{B6869295-EA12-4405-95D5-9612C09CAD9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CovidDataWarehouse.Domain", "CovidDataWarehouse.Domain\CovidDataWarehouse.Domain.csproj", "{14C0869E-FC2C-4DA7-B68B-64E5C8C6DECD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidDataWarehouse.Domain", "CovidDataWarehouse.Domain\CovidDataWarehouse.Domain.csproj", "{14C0869E-FC2C-4DA7-B68B-64E5C8C6DECD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CovidDataWarehouse.Data", "CovidDataWarehouse.Data\CovidDataWarehouse.Data.csproj", "{41F4707D-ACBB-42D0-B887-51995D160FF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidDataWarehouse.Data", "CovidDataWarehouse.Data\CovidDataWarehouse.Data.csproj", "{41F4707D-ACBB-42D0-B887-51995D160FF4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PowerBi", "PowerBi", "{8AFE8B09-990D-4A70-A55F-A1CF1AA81CD6}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Downloads\Database_2_Data_visual.pbix = ..\..\..\Downloads\Database_2_Data_visual.pbix
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

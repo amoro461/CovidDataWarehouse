@@ -1,3 +1,4 @@
+using CovidDataWarehouse.App.Services;
 using CovidDataWarehouse.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +33,8 @@ namespace CovidDataWarehouse
 
             services.AddDbContext<CovidDatabaseContext>(options => options.UseSqlServer(DEFAULT_DATABASE_CONNECTION_STRING_NAME));
             services.AddDbContext<CovidDataWarehouseContext>(options => options.UseSqlServer(DEFAULT_DATA_WAREHOUSE_CONNECTION_STRING_NAME));
+
+            services.AddScoped<DataScraperServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

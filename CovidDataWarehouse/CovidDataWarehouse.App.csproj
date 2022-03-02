@@ -13,4 +13,8 @@
     <ProjectReference Include="..\CovidDataWarehouse.Domain\CovidDataWarehouse.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>

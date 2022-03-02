@@ -32,5 +32,12 @@ namespace CovidDataWarehouse.Data
                 throw new Exception("optionsBuilder is not configured.");
             }
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CovidCaseFact>();
+
+            modelBuilder.Entity<CaseAgeRangeDimension>();
+        }
     }
 }

@@ -8,16 +8,20 @@ using System.Threading.Tasks;
 
 namespace CovidDataWarehouse.Domain.DataWarehouse
 {
-    [Table("")]
+    [Table("Vaccine_Zone_Dimension")]
     public class VaccineZoneDimension
     {
         [Key]
-        public int ZoneId { get; set; }
+        [Column("Vaccine_Zone_Id")]
+        public int VaccineZoneId { get; set; }
 
+        [Column("Zone_Name")]
         public string ZoneName { get; set; }
 
+        [Column("Local_Name")]
         public string LocalName { get; set; }
 
+        [Column("Local_Code")]
         public string LocalCode { get; set; }
     }
 }

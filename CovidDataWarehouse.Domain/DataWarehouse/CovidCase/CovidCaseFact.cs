@@ -8,22 +8,29 @@ using System.Threading.Tasks;
 
 namespace CovidDataWarehouse.Domain.DataWarehouse
 {
-    [Table("")]
+    [Table("Covid_Cases_Fact")]
     public class CovidCaseFact
     {
         [Key]
+        [Column("Case_Covid_Id")]
         public int CovidCaseId { get; set; }
 
+        [Column("Case_Zone_Id")]
         public int CaseZoneId { get; set; }
 
+        [Column("Case_Age_Range_Id")]
         public int CaseAgeRangeId { get; set; }
 
+        [Column("Case_Status_Id")]
         public int CaseStatusId { get; set; }
 
-        public int DateId { get; set; }
+        [Column("Case_Date_Id")]
+        public int CaseDateId { get; set; }
 
+        [Column("IsFemale")]
         public bool IsFemale { get; set; }
 
+        [Column("IsConfirmed")]
         public bool IsConfirmed { get; set; }
     }
 }

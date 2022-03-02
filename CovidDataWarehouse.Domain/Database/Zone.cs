@@ -13,5 +13,11 @@ namespace CovidDataWarehouse.Domain.Database
 
         [Column("zone_name")]
         public string ZoneName { get; set; }
+
+        [Column("local_name")]
+        public string LocalName { get; set; }
+
+        [Column("local_code")]
+        public string LocalCode { get; set; }
     }
 }
